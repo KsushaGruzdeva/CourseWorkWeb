@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="justify-content-center">
+            <h2>Рейтинг мастеров</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div th:if="${not #lists.isEmpty(model.ratingMasters)}">
+
+<!--                <ol class="list-group list-group-numbered">-->
+<!--                    <div th:each="master : ${model.ratingMasters}">-->
+<!--                    <li class="list-group-item d-flex justify-content-between align-items-start">-->
+<!--                        <div class="ms-2 me-auto">-->
+<!--                            <div class="fw-bold">-->
+<!--                                <h6 th:text="'Мастер: ' + ${master.name}"></h6>-->
+<!--                            </div>-->
+<!--                            <div th:if="${not #lists.isEmpty(master.feedback)}">-->
+<!--                                <h6 th:text="'Отзывы: '"></h6>-->
+<!--                                <ul>-->
+<!--                                    <li th:each="feedback : ${master.feedback}" th:text="${feedback}"></li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    </div>-->
+<!--                </ol>-->
+
+                <div th:each="master : ${model.ratingMasters}">
+                    <div class="row bg-light rounded">
+                        <h6 th:text="'Мастер: ' + ${master.name}"></h6>
+                        <div th:if="${not #lists.isEmpty(master.feedback)}">
+                            <h6 th:text="'Отзывы: '"></h6>
+                            <ul>
+                                <li th:each="feedback : ${master.feedback}" th:text="${feedback}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body class="d-flex flex-column h-100">
+
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="justify-content-left">
+      <h2>Профиль</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <main class="jumbotron text-left rounded col-md-12 align-self-left pt-5">
+        <div class="row bg-light rounded">
+          <div th:if="${not #lists.isEmpty(model.masters)}">
+            <div th:each="master : ${model.masters}">
+              <h6 th:text="'Фамилия: ' + *{master.surname}"></h6>
+              <h6 th:text="'Имя: ' + *{master.name}"></h6>
+              <h6 th:text="'Отчество: ' + *{master.patronymic}"></h6>
+              <h6 th:text="'Email: ' + *{master.email}"></h6>
+              <h6 th:text="'Имя пользователя: ' + *{master.login}"></h6>
+            </div>
+            <b>Роль: </b>
+            <div sec:authentication="principal.authorities"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+        <div class="justify-content-center">
+          <h1>Вход</h1>
+        </div>
+        <form th:action="@{/users/login}"
+              th:method="post"
+              class="m-md-auto w-50 pb-3">
+          <div class="mb-3">
+            <label class="form-label" for="username">Имя пользователя</label>
+            <input id="username"
+                   name="username"
+                   th:value="${username}"
+                   type="text" class="form-control text-center"aria-describedby="userNameHelp"/>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="password">Пароль</label>
+            <input id="password"
+                   name="password"
+                   type="password" class="form-control text-center" aria-describedby="passwordHelp"/>
+          </div>
+
+          <p class="text-danger" th:if="${badCredentials}">
+            Неправильный пароль или имя пользлвателя.
+          </p>
+
+          <button type="submit" class="btn btn-secondary">Войти</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

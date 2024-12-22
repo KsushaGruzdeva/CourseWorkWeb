@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col" sec:authorize="hasAnyRole('ADMIN', 'MASTER')">Клиент</th>
+                    <th scope="col" sec:authorize="hasAnyRole('ADMIN', 'USER')">Мастер</th>
+                    <th scope="col">Название услуги</th>
+                    <th scope="col">Время</th>
+                </tr>
+                </thead>
+                <tbody>
+                <div th:if="${not #lists.isEmpty(model.appointments)}">
+                    <div th:each="appointment : ${model.appointments}">
+                        <tr>
+                            <td sec:authorize="hasAnyRole('ADMIN', 'MASTER')" th:text="${appointment.client}"></tdth:text></td>
+                            <td sec:authorize="hasAnyRole('ADMIN', 'USER')" th:text="${appointment.master}"></tdth:text></td>
+                            <td th:text="${appointment.attendance}"></tdth:text></td>
+                            <td th:text="${appointment.date}"></tdth:text></td>
+                        </tr>
+                    </div>
+                </div>
+                </tbody>
+            </table>
+            <div class="align-bottom" sec:authorize="hasRole('USER')"><a class="btn btn-secondary align-bottom"
+                                         th:href="@{/client/createAppointmentAttendance}">Записаться на услугу</a>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

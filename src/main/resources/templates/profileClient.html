@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body class="d-flex flex-column h-100">
+
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="justify-content-left">
+      <h2>Профиль</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <main class="jumbotron text-left rounded col-md-12 align-self-left pt-5">
+        <div class="row bg-light rounded">
+          <div th:object="${model}">
+            <h6 th:text="'Имя: ' + *{name}"></h6>
+            <h6 th:text="'Email: ' + *{email}"></h6>
+            <h6 th:text="'Имя пользователя: ' + *{login}"></h6>
+            <b>Роль: </b>
+            <div sec:authentication="principal.authorities"></div>
+          </div>
+<!--          <div class="mt-4">-->
+<!--            <a class="btn btn-outline-primary" th:href="@{/client/edit}">Редактировать профиль</a>-->
+<!--          </div>-->
+          <div class="mt-4">
+            <a class="btn btn-outline-secondary" th:href="@{/client/appointments}">Мои записи</a>
+          </div>
+          <div class="mt-4">
+            <a class="btn btn-outline-secondary" th:href="@{/client/feedbacks}">Мои отзывы</a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

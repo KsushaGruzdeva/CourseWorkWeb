@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Фамилия</th>
+                        <th scope="col">Имя</th>
+                        <th scope="col">Отчество</th>
+                        <th scope="col">Email</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN')">#</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <div th:if="${not #lists.isEmpty(model.masters)}">
+                            <div th:each="master : ${model.masters}">
+                                <tr>
+                                <td th:text="${master.surname}"></tdth:text></td>
+                                <td th:text="${master.name}"></tdth:text></td>
+                                <td th:text="${master.patronymic}"></tdth:text></td>
+                                <td th:text="${master.email}"></tdth:text></td>
+                                <td class="mt-2" sec:authorize="hasRole('ADMIN')">
+                                    <a class="btn btn-outline-primary"
+                                       th:href="@{/masters/{id}/edit(id=${master.id})}">Редактировать</a>
+                                </td>
+                                </tr>
+                            </div>
+                        </div>
+                    </tbody>
+                </table>
+                <div class="mt-4" sec:authorize="hasRole('ADMIN')">
+                    <a class="btn btn-outline-success" th:href="@{/masters/register}">Зарегистрировать нового мастера</a>
+                </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+                <div class="justify-content-center">
+                    <h1>Создать отзыв</h1>
+                </div>
+                <form th:action="@{/client/createFeedback}"
+                      th:method="post"
+                      th:object="${form}"
+                      class="m-md-auto w-50 pb-3">
+
+                    <div class="mb-3">
+                        <label class="form-label" for="master">Мастера</label>
+                        <select th:field="*{master}"
+                                name="master"
+                                th:errorclass="is-invalid"
+                                class="form-select"
+                                id="master">
+                            <option value="" disabled selected>Выберите мастера</option>
+                            <option th:each="master : ${model.masters}"
+                                    th:value="${master}"
+                                    th:text="${master}">
+                            </option>
+                        </select>
+                        <small th:if="${#fields.hasErrors('master')}"
+                               th:errors="*{master}"
+                               class="text-danger">Error message</small>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label" for="feedback">Отзыв</label>
+                        <input th:field="*{feedback}"
+                               th:errorclass="is-invalid"
+                               type="text"
+                               class="form-control text-center"
+                               name="feedback"
+                               id="feedback"/>
+                        <small th:if="${#fields.hasErrors('feedback')}"
+                               th:errors="*{feedback}"
+                               class="text-danger">Error message</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary">Создать отзыв</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>
