@@ -12,13 +12,11 @@ import org.springframework.stereotype.Service;
 
 import jakarta.validation.ConstraintViolation;
 import rut.miit.beautySalon.models.*;
-import rut.miit.beautySalon.models.enums.UserRoles;
 import rut.miit.beautySalon.repositories.AppointmentRepository;
 import rut.miit.beautySalon.repositories.BeautySalonRepository;
 import rut.miit.beautySalon.repositories.FeedbackRepository;
 import rut.miit.beautySalon.repositories.MasterRepository;
 import rut.miit.beautySalon.services.MasterService;
-import rut.miit.beautySalon.services.dtos.BeautySalonDto;
 import rut.miit.beautySalon.services.dtos.FeedbackDto;
 import rut.miit.beautySalon.services.dtos.MasterDto;
 import rut.miit.beautySalon.services.dtos.MasterRatingDto;
@@ -118,16 +116,6 @@ public class MasterServiceImpl implements MasterService {
         return modelMapper.map(master, MasterDto.class);
     }
 
-    public static List<String> findByStream(List<String> arr, int n) {
-        return arr.stream().collect(Collectors.groupingBy(i -> i, Collectors.counting()))
-                .entrySet().stream()
-                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
-                .map(Map.Entry::getKey)
-                .limit(n)
-                .collect(Collectors.toList());
-    }
-
-
     @Override
     public List<MasterRatingDto> rating () {
         List<Master> masterByAppointment = appointmentRepository.findAll().stream()
@@ -143,15 +131,6 @@ public class MasterServiceImpl implements MasterService {
             MasterRatingDto masterRatingDto = new MasterRatingDto(master, feedbackDtos, count);
             masterRatingList.add(masterRatingDto);
         }
-//        List<String> mastersId = findByStream(masterByAppointmentId, 3);
-//        List<Master> masters = mastersId.stream().map(m -> masterRepository.findById(Master.class, m)).toList();
-//        for (int i = 0; i < masters.size(); i++) {
-//            List<Feedback> feedbacks = feedbackRepository.findAllByMaster(masters.get(i));
-//            List<FeedbackDto> feedbackDtos = feedbacks.stream().map(f -> modelMapper.map(f, FeedbackDto.class)).toList();
-//            String master = masters.get(i).getSurname() + " " + masters.get(i).getName() + " " + masters.get(i).getPatronymic();
-//            MasterRatingDto masterRatingDto = new MasterRatingDto(master, feedbackDtos, 0);
-//            masterRatingList.add(masterRatingDto);
-//        }
         masterRatingList.sort(new MasterComparator());
         return masterRatingList;
     }
